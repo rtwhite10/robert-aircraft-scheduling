@@ -1,23 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import {getFlightData, getPlaneData} from './redux/actions/dataActions'
+import { Container } from '@material-ui/core';
+import FlightTracker from './views/FlightTracker';
 
 function App() {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getFlightData())
+    dispatch(getPlaneData())
+  },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container maxWidth="lg">
+        <FlightTracker />
+      </Container>
     </div>
   );
 }
