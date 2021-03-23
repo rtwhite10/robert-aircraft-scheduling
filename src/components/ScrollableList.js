@@ -1,8 +1,10 @@
-import { Card, List, makeStyles, ListItem } from '@material-ui/core';
+import {
+  Card, List, makeStyles, ListItem
+} from '@material-ui/core';
 import React from 'react';
+import PropTypes from 'prop-types';
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 
   list: {
     width: '100%',
@@ -14,17 +16,22 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'inherit',
     padding: 0,
   },
-}))
+}));
 
+export default function Flights({
+  children, placeHolder
+}) {
+  const classes = useStyles();
 
-export default function Flights({children}) {
-  const classes = useStyles()
-
-  return(
+  return (
     <List className={classes.list}>
       <ul className={classes.ul}>
-      {children}
+        {children}
       </ul>
     </List>
-  )
+  );
+}
+
+Flights.propTypes = {
+  children: PropTypes.element.isRequired,
 }

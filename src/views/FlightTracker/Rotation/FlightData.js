@@ -1,14 +1,19 @@
-import { Box, Card, CardContent, makeStyles, Typography } from '@material-ui/core';
+import {
+  Box, Card, CardContent, makeStyles, Typography
+} from '@material-ui/core';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
-  root:{
+  root: {
     width: '100%',
-    height: '200px'
+    height: '200px',
   },
   container: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '85%'
   },
   flightId: {
     display: 'flex',
@@ -19,14 +24,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'space-between'
   }
-}))
+}));
 
-
-export default function FlightData({data}) {
-  const {id, origin, destination, readable_arrival, readable_departure} = data;
+export default function FlightData({ data }) {
+  const {
+    id, origin, destination, readable_arrival, readable_departure
+  } = data;
   const classes = useStyles();
 
-  return(
+  return (
     <Card elevation={5} className={classes.root}>
       <CardContent className={classes.container}>
         <Box className={classes.flightId}>
@@ -40,5 +46,9 @@ export default function FlightData({data}) {
         </Box>
       </CardContent>
     </Card>
-  )
+  );
 }
+
+FlightData.propTypes = {
+  data: PropTypes.element.isRequired
+};

@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import FlightData from './FlightData'
 import ScrollableList from '../../../components/ScrollableList'
+import { Droppable, Draggable, DragDropContext } from 'react-beautiful-dnd'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'inherit',
     padding: 0,
   },
+  listItem: {}
 }))
 
 
@@ -33,16 +35,25 @@ export default function Flights() {
   const classes = useStyles()
 
   return(
-    <Card elevation={5} className={classes.root}>
-      <ScrollableList>
-        {
-          flight_data.map((flight) => (
-            <ListItem key={flight.id}>  
-              <FlightData data={flight} />
-            </ListItem> 
-          ))
-        }
-       </ScrollableList>
+    <Card elevation={5} className={classes.root}> 
+      <Droppable droppableId="flights">
+      {(provided) => (
+        <List className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
+          {
+            flight_data.map((flight, index) => (
+              <Draggable key={flight.id}  draggableId={flight.id} index={index}>
+                {(provided) => (
+                  <ListItem className={classes.listItem} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>  
+                    <FlightData data={flight} />
+                  </ListItem> 
+                )}
+              </Draggable>
+            ))
+          }
+          {provided.placeholder}
+        </List>
+      )}
+       </Droppable>
     </Card>
   )
 }
